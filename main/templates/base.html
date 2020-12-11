@@ -1,0 +1,41 @@
+{% load static %}
+{% load pwa %}
+{% load webpush_notifications %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Django</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'style.css' %}"> -->
+    {% progressive_web_app_meta %}
+    {% webpush_header %}
+</head>
+<body>
+    <!-- As a heading -->
+    <nav class="navbar navbar-light bg-light">
+        <div class="container">
+            <span class="navbar-brand mb-0 h1">PWA Django</span>
+            <div class="my-2 my-lg-0">
+                {% if user.is_authenticated %}
+                    <span class="mr-2">{{user.first_name}} {{user.last_name}} ({{user.email}})</span>
+                    <a href="{% url 'logout' %}" role="button" class="btn btn-outline-danger" aria-pressed="true">
+                        Logout
+                    </a>
+                {% else %}
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" role="button" class="btn btn-outline-primary" aria-pressed="true">
+                        <img src="{% static 'icons/google-icon.svg' %}" alt="google" height="24px">
+                        Sign in with Google
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+
+    {% endblock %}
+</body>
+</html>

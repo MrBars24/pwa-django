@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+{% load webpush_notifications %}
+
+{% if user.is_superuser %}
+<div class="container">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">User</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <th>{{user.first_name}} {{user.last_name}} ({{user.email}})</th>
+        <td class="text-right">
+          <a href="{% url 'push' user.id %}" class="btn btn-primary">Push Notification</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Hello</h1>
+      <p class="lead">Welcome to progressive django.</p>
+      {% webpush_button with_class="btn btn-outline-info" %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

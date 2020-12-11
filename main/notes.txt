@@ -1,0 +1,3 @@
+social-auth-app-django
+django-progressive-web-app
+django-webpush
